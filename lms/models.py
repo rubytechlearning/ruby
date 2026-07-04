@@ -14,6 +14,7 @@ class MetaData(models.Model):
 class Category(MetaData):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
+    image_file = models.ImageField(upload_to='categories/', null=True, blank=True)
 
     def __str__(self):
         return self.name
