@@ -15,7 +15,7 @@ class StudentProfile(models.Model):
     # Add any additional fields you want for the student profile
     # For example:
     # bio = models.TextField(blank=True)
-    # profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
 
     def __str__(self):
         return self.user.username
@@ -25,8 +25,8 @@ class InstructorProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='instructor_profile')
     # Add any additional fields you want for the instructor profile
     # For example:
-    # bio = models.TextField(blank=True)
-    # profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
+    bio = models.TextField(blank=True)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
 
     def __str__(self):
         return self.user.username

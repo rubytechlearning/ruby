@@ -21,6 +21,9 @@ def index(request):
         'courses': courses,
         'testimonials': testimonials,
         'instructors': instructors,
+        'trending_courses':courses.filter(is_trending=True)[:6],  # Limit to 6 trending courses
+        'popularity_courses':courses.filter(is_popular=True)[:6],  # Limit to 6 popular courses
+        'featured_courses':courses.filter(is_featured=True)[:6],  # Limit to 6 featured courses
     }
     
     return render(request, 'index.html', context)
@@ -54,8 +57,7 @@ def contact(request):
 
 
 # remove to their apps
-def courses(request):
-    return render(request, 'courses-v1.html')
+
 
 
 def blog(request):

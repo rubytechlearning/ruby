@@ -20,4 +20,6 @@ from django.urls import path, include
 urlpatterns = [
     path('ruby-admin/', admin.site.urls),
     path('', include('core.urls')),
+    path('lms/', include('lms.urls')),
+    
 ]

@@ -24,6 +24,7 @@ class Category(MetaData):
 class Course(MetaData):
     title = models.CharField(max_length=200)
     description = models.TextField()
+    image_file = models.FileField(upload_to='courses/images/', blank=True, null=True)
     outline = models.TextField(help_text="What you will learn, modules, and key topics covered.")
     course_material_list = models.TextField(help_text="List of course materials, resources, and references.")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='courses')
