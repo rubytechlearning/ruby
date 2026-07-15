@@ -45,27 +45,30 @@
             <div class="col-xl-8 col-lg-10">
                <div class="it-signup-wrap">
                   <h4 class="it-signup-title">Hi Welcome Back!</h4>                    
-                  <form action="#">
+                  <form action="{% url 'login' %}" method="post">
+                     {% csrf_token %}
                      <div class="it-signup-input-wrap">
                         <div class="it-signup-input mb-20">
                            <label>Username or email address</label>
-                           <input type="email" placeholder="Email or user id">
+                           {{ form.username }}
+                           {{ form.username.errors }}
                         </div>
                         <div class="it-signup-input mb-25">
                            <label>Password</label>
-                           <input type="password" placeholder="Password">
+                           {{ form.password }}
+                           {{ form.password.errors }}
                            <input type="hidden" name="next" value="{{ next }}">
                         </div>
                      </div>
                      <div class="it-signup-forget d-flex justify-content-between flex-wrap">
                         <div class="it-contact-agree mb-30">
-                           <div class="form-check">
+                           <!--<div class="form-check">
                               <input class="form-check-input" type="checkbox" value=""
-                                 id="flexCheckDefault">
+                                 id="flexCheckDefault" >
                               <label class="form-check-label" for="flexCheckDefault">
                                  Save Account
                               </label>
-                           </div>
+                           </div>-->
                         </div>
                         <a class="mb-30 border-line" href="#">Forgot Password?</a>
                      </div>

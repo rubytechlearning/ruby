@@ -61,6 +61,7 @@ class EnrolledStudent(MetaData):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='enrolled_students')
     progress = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
     completed = models.BooleanField(default=False)
+    paid = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.student.user.username} - {self.course.title}"

@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Payment Failed{% endblock %}
+
+{% block content %}
+
+    <section class="pt-120 pb-80" style="background:#f6f8fb;min-height:100vh;">
+
+        <div class="container">
+
+            <div class="row justify-content-center">
+
+            <div class="col-lg-7">
+
+            <div class="card border-0 shadow-lg text-center"
+                style="border-radius:18px;overflow:hidden;">
+
+            <div style="
+            background:linear-gradient(135deg,#dc3545,#ff5f6d);
+            padding:50px;
+            color:white;">
+
+            <div style="
+            width:110px;
+            height:110px;
+            margin:auto;
+            background:white;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;">
+
+            <i class="fas fa-times"
+            style="font-size:60px;color:#dc3545;"></i>
+
+            </div>
+
+            <h2 class="text-white mt-4">
+            Payment Failed
+            </h2>
+
+            <p style="color:#ffecec;">
+            Unfortunately your payment could not be completed.
+            </p>
+
+            </div>
+
+            <div class="card-body p-5">
+
+            <div class="alert alert-danger">
+
+            <strong>Reason</strong>
+
+            <br>
+
+            {{ error|default:"The transaction was cancelled or declined by your bank." }}
+
+            </div>
+
+            <table class="table table-borderless">
+
+            <tr>
+            <th>Reference</th>
+            <td>{{ reference }}</td>
+            </tr>
+
+            <tr>
+            <th>Amount</th>
+            <td>₦{{ amount }}</td>
+            </tr>
+
+            <tr>
+            <th>Status</th>
+            <td>
+
+            <span class="badge bg-danger">
+            Failed
+            </span>
+
+            </td>
+            </tr>
+
+            </table>
+
+            <div class="mt-4">
+
+            <a href="{% url 'initiate_payment' course.pk %}"
+            class="btn"
+            style="
+            background:#710001;
+            color:white;
+            padding:12px 35px;
+            border-radius:8px;">
+
+            <i class="fas fa-redo"></i>
+
+            Try Again
+
+            </a>
+
+            <a href="{% url 'student_dashboard' %}"
+            class="btn btn-outline-secondary ms-2">
+
+            Dashboard
+
+            </a>
+
+            </div>
+
+            </div>
+
+            </div>
+
+            </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+{% endblock %}

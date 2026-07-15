@@ -3,6 +3,7 @@ import requests
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 
@@ -29,22 +30,45 @@ def enroll_course(request, course_id):
     course = get_object_or_404(Course, id=course_id)
     if request.user.is_authenticated and request.user.is_student:
         EnrolledStudent.objects.get_or_create(student=request.user.student_profile, course=course)
+        messages.success(request, f"You have successfully enrolled in {course.title}!")
         return redirect('course_detail', course_id=course.id)
     else:
+        referer = request.META.get('HTTP_REFERER')
+        if referer:
+            messages.error(request, "You need to be logged in as a student to enroll in a course.")
+            return redirect(referer)    
         return redirect('login')
 
 
 # --------- Student Dashboard View ----------
 @login_required
 def student_dashboard(request):
-    student = request.user.student_profile
+    context = {}
+    try:
+        student = request.user.student_profile
+        context.update({'student':student})
+    except StudentProfile.DoesNotExist:
+        referer = request.META.get('HTTP_REFERER')
+        if referer:
+            messages.error(request, "You need to be logged in as a student to access the dashboard.")
+            return redirect(referer)  
+         
     enrolled_courses = EnrolledStudent.objects.filter(student=request.user.student_profile)
-    payment_status = {}
-    for enrollment in enrolled_courses:
-        paid = PaymentRecord.objects.filter(student=student, course=enrollment.course).exists()
-        payment_status[enrollment.course.id] = paid
-
-    return render(request, 'student-dashboard.html', {'enrolled_courses': enrolled_courses, 'payment_status': payment_status})
+    payment_history = PaymentRecord.objects.filter(student=request.user.student_profile)
+    payment_status = {record.course.id: record for record in payment_history}
+    total_amount_paid = sum(record.amount for record in payment_history)
+    materials = {enrollment.course.id: enrollment.course.materials.all() for enrollment in enrolled_courses}
+    
+    context.update({
+        'enrolled_courses': enrolled_courses, 
+        'payment_status': payment_status,
+        'payments': payment_history,
+        'total_paid': total_amount_paid,
+        'materials': materials
+    })
+    
+    
+    return render(request, 'student-dashboard.html', context)
 
 
 
@@ -57,10 +81,12 @@ def initiate_payment(request, course_id):
         
         # Check if the student is enrolled in the course
         if not EnrolledStudent.objects.filter(student=student, course=course).exists():
+            messages.error(request, "You need to enroll in the course before making a payment.")
             return redirect('course_detail', course_id=course.id)
         
         # Check if the student has already made a payment for the course
         if PaymentRecord.objects.filter(student=student, course=course).exists():
+            messages.info(request, "You have already made a payment for this course.")
             return redirect('student_dashboard')
         
         # Prepare Paystack data
@@ -93,13 +119,17 @@ def initiate_payment(request, course_id):
             if response_data['status']:
                 # Redirect user to Paystack payment page
                 payment_url = response_data['data']['authorization_url']
+                messages.success(request, "Payment initiated successfully. You will be redirected to Paystack.")
                 return redirect(payment_url)
             else:
                 # Handle error
-                return render(request, 'payment_error.html', {'error': response_data.get('message')})
+                messages.error(request, "Failed to initiate payment.")
+                return render(request, 'payment-error.html', {'error': response_data.get('message'), 'course':course})
         except Exception as e:
-            return render(request, 'payment_error.html', {'error': str(e)})   
+            messages.error(request, "An error occurred while initiating payment.")
+            return render(request, 'payment-error.html', {'error': str(e), 'course':course})   
     else:
+        messages.error(request, "You need to be logged in as a student to make a payment.")
         return redirect('login')
 
 
@@ -142,8 +172,14 @@ def payment_callback(request):
                 )
                 # Optionally, mark enrollment as completed or update progress? Not required.
 
-            return render(request, 'payment_success.html')
+            return render(request, 'payment-success.html')
         else:
-            return render(request, 'payment_error.html', {'error': 'Payment verification failed'})
+            return render(request, 'payment-error.html', {'error': 'Payment verification failed', 'course':course})
     except Exception as e:
-        return render(request, 'payment_error.html', {'error': str(e)})
+        return render(request, 'payment-error.html', {'error': str(e), 'course':course})
+    
+    
+def instructor_dashboard(request):
+    # Placeholder for instructor dashboard view
+    return render(request, 'instructor-dashboard.html')
+

@@ -8,6 +8,7 @@ urlpatterns = [
     path("register/", views.signup, name="signup"),
     path("login/", views.signin, name="login"),
     path("logout/", views.logout_view, name="logout"),
+    path("student/update/", views.student_profile_update, name="student_profile_update"),
 
     # Forgot password
 

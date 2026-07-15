@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
-from .models import User
+from .models import User, StudentProfile, InstructorProfile
 
 
 
@@ -50,3 +50,24 @@ class LoginForm(AuthenticationForm):
             "placeholder": "Password"
         })
     )
+
+
+class StudentUserForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+        ]
+
+
+class StudentProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = StudentProfile
+        fields = [
+            "phone",
+            "profile_picture",
+        ]
