@@ -33,10 +33,10 @@ SECRET_KEY = 'django-insecure-p3#gvwx0#ct9vy@3aw&u@+fn0-ra3dweq(6#pqr(vqtft(%8w_
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'http://ruby-d4hk.onrender.com',
-    'http://127.0.0.1:8000/',
-    'http://localhost:8000/',
-    'http://rubytechlearning.com'
+    'ruby-d4hk.onrender.com',
+    '127.0.0.1:8000',
+    'localhost:8000',
+    'rubytechlearning.com'
 ]
 
 
