@@ -19,6 +19,14 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+# Change the text at the top of every admin page
+admin.site.site_header = "RubyTech Learning"
+
+# Change the text in the browser tab title
+admin.site.site_title = "RubyTech Learning Admin"
+
+# Change the welcome text at the top of the admin index page
+admin.site.index_title = "Welcome to the Control Panel"
 
 urlpatterns = [
     path('ruby-admin/', admin.site.urls),

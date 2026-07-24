@@ -1,0 +1,43 @@
+{% extends "admin/base.html" %}
+
+
+{% block branding %}
+<div id="site-name">
+    <a href="{% url 'admin:index' %}">{{ site_header }}</a>
+</div>
+{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    :root {
+        /* Changes the main dark header background color */
+        --primary: #550103; 
+        
+        /* Changes the sub-header and breadcrumb banner background */
+        --secondary: #710001; 
+        
+        /* Changes button and link accent focus colors */
+        --accent: #F8C62F; 
+        
+        /* Text color used on top of primary color headers */
+        --primary-fg: #ffffff; 
+        
+        /* Background color for the table headers */
+        --header-color: #ebf8ff; 
+
+        /* NEW LINK CUSTOMIZATIONS */
+        /* Changes the standard link color in text and tables */
+        --link-color: #ffffff; 
+
+        /* Changes the color when you hover over a standard link */
+        --link-hover-color: #F8C62F; 
+
+        /* Changes the text color of the items in the sidebar menu */
+        --sidebar-link-color: #F8C62F; 
+
+        /* Changes the background color of a selected row or active link */
+        --selected-bg: #edf2f7; 
+    }
+</style>
+{% endblock %}
