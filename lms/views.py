@@ -186,16 +186,20 @@ def payment_callback(request):
             # Check if payment already recorded
             if not PaymentRecord.objects.filter(student=student, course=course).exists():
                 # Create payment record
-                PaymentRecord.objects.create(
+                payRecord = PaymentRecord.objects.create(
                     student=student,
                     course=course,
                     amount=course.price,
                     transaction_id=reference,
-                    payment_method='Paystack'
+                    payment_method='Paystack',
+                    status='Paid'
                 )
+                record = EnrolledStudent.objects.get(student=student, course=course)
+                record.paid = True
+                record.save()
                 # Optionally, mark enrollment as completed or update progress? Not required.
 
-            return render(request, 'payment-success.html')
+            return render(request, 'payment-success.html', {'payment':payRecord})
         else:
             return render(request, 'payment-error.html', {'error': 'Payment verification failed', 'course':course})
     except Exception as e:

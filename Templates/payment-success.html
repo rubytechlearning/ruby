@@ -52,7 +52,7 @@
 
             <tr>
                 <th>Reference</th>
-                <td>{{ payment.reference }}</td>
+                <td>{{ payment.transaction_id }}</td>
             </tr>
 
             <tr>
@@ -78,7 +78,7 @@
 
         <div class="mt-4">
 
-            <a href="{% url 'student-dashboard' %}"
+            <a href="{% url 'student_dashboard' %}"
                class="btn"
                style="
                background:#710001;
@@ -91,16 +91,6 @@
                 Back to Dashboard
 
             </a>
-
-            <a href="{% url 'payment-history' %}"
-               class="btn btn-outline-secondary ms-2">
-
-                <i class="fas fa-receipt"></i>
-
-                Payment History
-
-            </a>
-
         </div>
 
     </div>

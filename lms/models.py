@@ -83,6 +83,7 @@ class PaymentRecord(MetaData):
     transaction_id = models.CharField(max_length=100, null=True, blank=True)
     payment_date = models.DateTimeField(auto_now_add=True)
     payment_method = models.CharField(max_length=50)
+    status = models.CharField(max_length=10, choices=(('Paid', 'Paid'), ('Unpaid', 'Unpaid')), default='Unpaid')
 
     def __str__(self):
         return f"{self.student.user.username} - {self.course.title} - {self.amount}"
