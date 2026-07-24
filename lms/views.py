@@ -2,6 +2,7 @@
 import requests
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.conf import settings
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
@@ -16,9 +17,30 @@ from .models import Course, Category, EnrolledStudent, PaymentRecord, ClassSessi
 
 # ---------- Course Views ----------
 def courses(request):
-    courses = Course.objects.all()
-    return render(request, 'courses-v1.html', {'courses': courses})
+    from django.db.models import Q
 
+    queryset = Course.objects.all()
+    q = request.GET.get('q')
+    category = request.GET.get('category')
+
+    if q:
+        # Search by course title OR category name (case‑insensitive)
+        queryset = queryset.filter(
+            Q(title__icontains=q) | Q(category__name__icontains=q)
+        )
+
+    if category:
+        # Filter by category name (exact match, case‑insensitive)
+        queryset = queryset.filter(category__name__iexact=category)
+
+    # Optional: ordering, pagination, etc.
+    context = {'courses': queryset}
+    paginator = Paginator(queryset, 12)   # 12 per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context.update({'page_obj': page_obj})
+    return render(request,  'courses-v1.html', context)
+    
 
 # --------- Course Detail View ----------
 def course_detail(request, course_id):
