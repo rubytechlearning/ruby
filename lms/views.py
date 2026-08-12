@@ -45,7 +45,9 @@ def courses(request):
 # --------- Course Detail View ----------
 def course_detail(request, course_id):
     course = Course.objects.get(id=course_id)
-    return render(request, 'courses-details-v1.html', {'course': course})
+    outline_list = course.outline.split(',') if course.outline else []
+    context = {'course': course, 'outline_items': outline_list}
+    return render(request, 'courses-details-v1.html', context)
 
 
 # --------- Enroll in Course View ----------
