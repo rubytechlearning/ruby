@@ -85,8 +85,12 @@
                   <div class="it-course-content p-relative">
                      <div class="d-flex justify-content-between align-items-center mb-20">
                         <div class="it-course-author">
-                           <img src="{{course.instructor.profile_picture.url}}" alt="{{course.instructor}}">
-                           <span>{{course.instructor}}</span>
+                           {% if course.instructor %}
+                           <img src="{{course.instructor.profile_picture.url}}" alt="{{ course.instructor.user.username }}">
+                           <span>{{ course.instructor.user.username }}</span>
+                           {% else %}
+                           <img src="{% static 'assets/img/avatar/details-1-1.png' %}" alt="">
+                           {% endif %}
                         </div>
                         <div class="it-course-price-box">
                            <!--<del>$20.00</del>-->
