@@ -11,7 +11,7 @@ from .models import ContactLeads, Testimonials, Partner
 
 def index(request):
     categories = Category.objects.all()[:6]  # Limit to 6 categories
-    courses = Course.objects.all()[:6]  # Limit to 6 courses
+    courses = Course.objects.all().order_by('timestamp')[:6]  # Limit to 6 courses
     testimonials = Testimonials.objects.all()[:4]
     instructors = Instructor.objects.all()[:6]
     partners = Partner.objects.all()[:6]
