@@ -34,10 +34,11 @@ def courses(request):
         queryset = queryset.filter(category__name__iexact=category)
 
     # Optional: ordering, pagination, etc.
-    context = {'courses': queryset}
+    
     paginator = Paginator(queryset, 12)   # 12 per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    context = {'courses': page_obj}
     context.update({'page_obj': page_obj})
     return render(request,  'courses-v1.html', context)
     
