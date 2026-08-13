@@ -74,7 +74,13 @@
             <div class="col-xl-4 col-lg-6 col-md-6">
                <div class="it-course-item mb-35">
                   <div class="it-course-thumb z-index-1 border-radius-20">
-                     <a href="{% url 'course_detail' course.pk %}"><img class="w-100" src="{{course.image_file.url}}" alt=""></a>
+                     <a href="{% url 'course_detail' course.pk %}">
+                        {% if course.image_file %}
+                        <img class="w-100" src="{{ course.image_file.url }}" alt="{{ course.title }}">
+                        {% else %}
+                        <img class="w-100" src="{% static 'assets/img/course/Books Image.jfif' %}" alt="{{ course.title }}">
+                        {% endif %}
+                     </a>
                      <span class="course-category">{{course.category}}</span>
                      <button class="wishlist-btn">
                         <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
