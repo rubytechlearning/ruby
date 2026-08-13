@@ -400,7 +400,7 @@
                            <div class="it-course-content p-relative">
                               <div class="d-flex justify-content-between align-items-center mb-20">
                                  <div class="it-course-author">
-                                    {% if course.instructor %}
+                                    {% if course.instructor.user %}
                                     <img src="{{course.instructor.profile_picture.url}}" alt="{{ course.instructor.user.username }}">
                                     <span>{{ course.instructor.user.username }}</span>
                                     {% else %}
@@ -464,7 +464,13 @@
                      <div class="col-xl-4 col-lg-6 col-md-6">
                         <div class="it-course-item mb-35">
                            <div class="it-course-thumb z-index-1 border-radius-20">
-                              <a href="#"><img class="w-100" src="{{ course.image_file.url }}" alt="{{ course.title }}"></a>
+                              <a href="{% url 'course_detail' course.id %}">
+                                 {% if course.image_file %}
+                                 <img class="w-100" src="{{ course.image_file.url }}" alt="{{ course.title }}">
+                                 {% else %}
+                                 <img class="w-100" src="{% static 'assets/img/course/Books Image.jfif' %}" alt="{{ course.title }}">
+                                 {% endif %}
+                              </a>
                               <span class="course-category">{{ course.category.name }}</span>
                               <button class="wishlist-btn">
                                  <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -539,7 +545,13 @@
                      <div class="col-xl-4 col-lg-6 col-md-6">
                         <div class="it-course-item mb-35">
                            <div class="it-course-thumb z-index-1 border-radius-20">
-                              <a href="{% url 'course_detail' course.id %}"><img class="w-100" src="{{ course.image_file.url }}" alt=""></a>
+                              <a href="{% url 'course_detail' course.id %}">
+                                 {% if course.image_file %}
+                                 <img class="w-100" src="{{ course.image_file.url }}" alt="{{ course.title }}">
+                                 {% else %}
+                                 <img class="w-100" src="{% static 'assets/img/course/Books Image.jfif' %}" alt="{{ course.title }}">
+                                 {% endif %}
+                              </a>
                               <span class="course-category">{{ course.category.name }}</span>
                               <button class="wishlist-btn">
                                  <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -614,7 +626,13 @@
                      <div class="col-xl-4 col-lg-6 col-md-6">
                         <div class="it-course-item mb-35">
                            <div class="it-course-thumb z-index-1 border-radius-20">
-                              <a href="{% url 'course_detail' course.id %}"><img class="w-100" src="{{course.image_file.url}}" alt=""></a>
+                              <a href="{% url 'course_detail' course.id %}">
+                                 {% if course.image_file %}
+                                 <img class="w-100" src="{{ course.image_file.url }}" alt="{{ course.title }}">
+                                 {% else %}
+                                 <img class="w-100" src="{% static 'assets/img/course/Books Image.jfif' %}" alt="{{ course.title }}">
+                                 {% endif %}
+                              </a>
                               <span class="course-category">{{ course.category }}</span>
                               <button class="wishlist-btn">
                                  <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
