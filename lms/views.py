@@ -15,6 +15,13 @@ from .models import Course, Category, EnrolledStudent, PaymentRecord, ClassSessi
 
 # Create your views here.
 
+# --------- Category Views ----------
+def categories(request):
+    category_list = Category.objects.all()
+    context = {'page_obj': category_list, 'courses':category_list}
+    return render(request, 'categories.html', context)
+
+
 # ---------- Course Views ----------
 def courses(request):
     from django.db.models import Q
@@ -38,7 +45,7 @@ def courses(request):
     paginator = Paginator(queryset, 12)   # 12 per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    context = {'courses': page_obj}
+    context = {'courses': queryset}
     context.update({'page_obj': page_obj})
     return render(request,  'courses-v1.html', context)
     

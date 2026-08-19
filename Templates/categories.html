@@ -98,13 +98,9 @@
                            <img src="{% static 'assets/img/avatar/details-1-1.png' %}" alt="">
                            {% endif %}
                         </div>
-                        <div class="it-course-price-box">
-                           <!--<del>$20.00</del>-->
-                           <span>${{course.price}}</span>
-                        </div>
                      </div>
                      <h5 class="it-course-title mb-20">
-                        <a class="border-line" href="{% url 'course_detail' course.pk %}">{{course}}</a>
+                        <a class="border-line" href="{% url 'courses' %}?category={{ course.name }}">{{course.name}}</a>
                      </h5>
                      <div class="it-course-rating mb-10">
                         <div>
@@ -131,10 +127,10 @@
                         </span>
                      </div>
                      <div class="it-course-btn">
-                        <a href="{% url 'course_detail' course.pk %}" class="it-btn-yellow w-100">
+                        <a href="{% url 'courses' %}?category={{ course.name }}" class="it-btn-yellow w-100">
                            <span>
-                              <span class="text-1">Preview This Course</span>
-                              <span class="text-2">Preview This Course</span>
+                              <span class="text-1">Preview This Courses</span>
+                              <span class="text-2">Preview This Courses</span>
                            </span>
                            <i>
                               <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
